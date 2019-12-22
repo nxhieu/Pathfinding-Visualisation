@@ -1,0 +1,9 @@
+.main-nav {
+  height: 5vh;
+  width: 100vw;
+  display: flex;
+  /* padding: 0.85rem 2rem; */
+  align-items: flex-end;
+  color: red;
+  background-color: #447ac4;
+}

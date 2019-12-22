@@ -1,0 +1,8 @@
+.grid {
+  height: 95vh;
+  width: 100vw;
+  display: grid;
+  align-content: center;
+  grid-template-columns: repeat(50, 1fr);
+  grid-template-rows: repeat(35, 1fr);
+}

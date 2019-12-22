@@ -1,0 +1,18 @@
+.node-normal {
+  border: 1px solid #000;
+}
+
+.node-path {
+  border: 1px solid #000;
+  background-color: blue;
+}
+
+.node-start {
+  border: 1px solid #000;
+  background-color: #000;
+}
+
+.node-finish {
+  border: 1px solid #000;
+  background-color: #ff0000;
+}
