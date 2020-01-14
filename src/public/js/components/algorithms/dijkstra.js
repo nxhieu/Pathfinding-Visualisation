@@ -8,33 +8,34 @@ function Dijkstra(grid, start, finish, numberOfNodes) {
   while (k < numberOfNodes - 1) {
     let { index, minScore } = comparingGreedyScore(
       GreedyScore_node,
-      Visited_node
+      Visited_node,
+      grid
     );
 
     if (index === finish) {
-      // console.log("con", index, "finish", finish);
-      // console.log(typeof index);
-      // console.log(Visited_node);
       let shortestPath = [];
 
       findShortestPath(shortestPath, prev, start, finish);
       return { path: shortestPath, conqueredNode: conquered };
-      // return Visited_node;
+    }
+    if (index) {
+      conquerNode(
+        grid,
+        GreedyScore_node,
+        Visited_node,
+        index,
+        minScore,
+        prev,
+        conquered
+      );
     }
 
-    conquerNode(
-      grid,
-      GreedyScore_node,
-      Visited_node,
-      index,
-      minScore,
-      prev,
-      conquered
-    );
     // console.log(index);
 
     k++;
   }
+
+  return { path: null, conqueredNode: conquered };
 }
 
 function conquerNode(
@@ -69,14 +70,15 @@ function conquerNode(
   }
 }
 
-function comparingGreedyScore(GreedyScore_node, Visited_node) {
+function comparingGreedyScore(GreedyScore_node, Visited_node, grid) {
   let minScore = Number.MAX_SAFE_INTEGER;
   let index;
   for (let j in GreedyScore_node) {
     if (
       GreedyScore_node[j] &&
       GreedyScore_node[j] < minScore &&
-      typeof Visited_node[j] === "undefined"
+      typeof Visited_node[j] === "undefined" &&
+      !grid[j].isBlocked
     ) {
       minScore = GreedyScore_node[j];
       index = j;
@@ -86,17 +88,10 @@ function comparingGreedyScore(GreedyScore_node, Visited_node) {
 }
 
 function findShortestPath(shortestPath, prev, start, finish) {
-  // if (typeof finish === "undefined") {
-  //   console.log(shortestPath);
-  //   return shortestPath;
-  // }
   if (typeof finish !== "undefined") {
     findShortestPath(shortestPath, prev, start, prev[finish]);
     shortestPath.push(finish);
-    // console.log(shortestPath);
-    // console.log(finish);
   }
 }
 
-function findConquerNode() {}
 export default Dijkstra;

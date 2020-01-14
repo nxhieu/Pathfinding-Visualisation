@@ -1,18 +1,127 @@
 .node-normal {
-  border: 1px solid #000;
+  outline: 0.01px solid #000;
+  background-color: #f4f4f4;
 }
 
 .node-path {
-  border: 1px solid #000;
-  background-color: blue;
+  outline: 0.01px solid #000;
+  background-color: #fdfd66;
+}
+
+.node-conquered {
+  outline: 0.01px solid #000;
+  background-color: #add8e6;
+  position: relative;
+  overflow: hidden;
+
+  animation: vertexConquered 2s ease;
+}
+/* .node-conquered:before {
+  content: "";
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  outline: 1px solid #000;
+  background-color: #add8e6;
+  position: relative;
+  overflow: hidden;
+  animation: vertexConquered 2 s ease; 
+  transition: transform 1s ease;
+ border-radius: 50%;
+}  */
+
+.node-blocked {
+  outline: 0.01px solid #000;
+  background-color: #4b4b4b;
+  animation: fadeInFromNone 0.1s ease-out;
 }
 
 .node-start {
-  border: 1px solid #000;
-  background-color: #000;
+  outline: 0.01px solid #000;
+  background: url("../image/start.png") no-repeat center right/cover;
 }
 
 .node-finish {
-  border: 1px solid #000;
-  background-color: #ff0000;
+  outline: 0.01px solid #000;
+  background: url("../image/finish.png") no-repeat center right/cover;
+}
+
+@keyframes fadeInFromNone {
+  0% {
+    display: none;
+    background-color: #5e5959;
+    opacity: 0;
+  }
+
+  50% {
+    display: block;
+    background-color: #454141;
+    opacity: 0;
+  }
+
+  100% {
+    display: block;
+    opacity: 1;
+  }
+}
+
+@keyframes vertexConquered {
+  from {
+    content: "";
+    /* top: 50%;
+    left: 50%; */
+    outline: none;
+    background-color: #4bfa54;
+    transform: scale(0);
+    border: none;
+
+    border-radius: 100%;
+  }
+
+  /* 10% {
+    display: none;
+
+    background-color: #5e5959;
+
+   
+    opacity: 0.1;
+    border-radius: 10%;
+  }
+
+  20% {
+    display: none;
+
+    background-color: #5e5959;
+
+   
+    opacity: 0.2;
+    border-radius: 20%;
+  }
+
+  30% {
+    display: none;
+
+    background-color: #5e5959;
+
+   
+    opacity: 0.2;
+    border-radius: 30%;
+  }
+  50% {
+    display: block;
+
+    background-color: #454141;
+
+   
+    opacity: 0.5;
+    border-radius: 50%;
+  } */
+
+  to {
+    outline: none;
+    transform: scale(1);
+    background-color: #add8e6;
+    opacity: 1;
+    border-radius: 0%;
+  }
 }

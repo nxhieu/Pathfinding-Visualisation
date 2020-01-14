@@ -1,8 +1,8 @@
 .grid {
-  height: 95vh;
+  height: 85vh;
   width: 100vw;
   display: grid;
   align-content: center;
-  grid-template-columns: repeat(50, 1fr);
-  grid-template-rows: repeat(35, 1fr);
+  grid-template-columns: repeat(40, 1fr);
+  grid-template-rows: repeat(20, 1fr);
 }

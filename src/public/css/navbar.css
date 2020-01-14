@@ -1,9 +1,118 @@
 .main-nav {
+  height: 15vh;
+}
+/* UPPER-NAV */
+
+.main-nav .upper-nav {
   height: 5vh;
   width: 100vw;
   display: flex;
-  /* padding: 0.85rem 2rem; */
-  align-items: flex-end;
+  flex-flow: row nowrap;
+  padding: 0.5rem 0rem;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
   color: red;
-  background-color: #447ac4;
+  background-color: #24292e;
+}
+
+/* upper nav child */
+.main-nav .upper-nav * {
+  color: #ffffff;
+  padding: 0rem 1rem;
+}
+
+/* upper nav list */
+.main-nav .upper-nav ul {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+}
+
+.main-nav .upper-nav ul li {
+  color: #ffffff;
+  padding: 0rem 1rem;
+  list-style: none;
+}
+.main-nav .upper-nav ul li a {
+  text-decoration: none;
+}
+
+.main-nav .upper-nav p {
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-size: bold;
+}
+
+/* selection drop down */
+.main-nav .upper-nav ul li select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border: none;
+  border: 0px;
+  outline: 0px;
+  appearance: none;
+  background: none;
+  text-align-last: center;
+  /* box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1); */
+  padding: 0.7rem 1rem;
+  font-size: 1rem;
+}
+
+.main-nav .upper-nav ul li select:hover {
+  cursor: pointer;
+}
+
+.main-nav .upper-nav ul li select option {
+  text-align: center;
+  text-align-last: center;
+  padding: 0.2rem;
+  background-color: lightblue;
+}
+
+.main-nav .upper-nav ul li button {
+  background: none;
+  cursor: pointer;
+  padding: 0.7rem 2.5rem;
+  font-size: 1rem;
+}
+
+.main-nav .upper-nav ul li a {
+  background: none;
+  cursor: pointer;
+  margin: 0 auto;
+  display: block;
+  padding: 0.7rem 2.5rem;
+  font-size: 1rem;
+}
+
+/* LOWER-NAV */
+.main-nav .lower-nav {
+  background-color: #f4f4f4;
+  padding: 0.1rem 0.7rem;
+}
+
+.main-nav .lower-nav ul {
+  display: flex;
+  justify-content: flex-start;
+}
+.main-nav .lower-nav ul * {
+  display: flex;
+  justify-content: flex-start;
+  padding: 0rem 4rem;
+}
+
+/* Lower-nav list */
+.main-nav .lower-nav ul li {
+  list-style: none;
+}
+
+.main-nav .lower-nav ul li * {
+  padding: 0rem 0.5rem;
+}
+
+/* Lower-nav list  */
+.main-nav .lower-nav ul li img {
+  width: 2.5rem;
+  height: 2.5rem;
 }
