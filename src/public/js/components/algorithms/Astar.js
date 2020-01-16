@@ -2,10 +2,9 @@
 // source: GeekForGeek. Implementation was in C++
 
 function A_star_pathfinding(grid, start, finish, numberOfNodes, rows, columns) {
-  console.log(typeof numberOfNodes);
   const openList = {}; //unconquered
   const conqueredList = [];
-  const cellDetails = grid;
+  const cellDetails = Object.assign([], grid);
   const closedList = []; //conquered
 
   for (let i = 1; i <= numberOfNodes; i++) {
@@ -26,7 +25,6 @@ function A_star_pathfinding(grid, start, finish, numberOfNodes, rows, columns) {
   while (!isEmpty(openList)) {
     //pop the start node off of the openList
 
-    console.log(findMinimum(openList), "start");
     // let beginPointer = openList[Object.keys(openList)[0]];
     let beginPointer = parseInt(findMinimum(openList));
     delete openList[beginPointer];
@@ -40,7 +38,6 @@ function A_star_pathfinding(grid, start, finish, numberOfNodes, rows, columns) {
     let gNew, hNew, fNew;
     //North
     if (isValid(beginPointer - columns, numberOfNodes)) {
-      console.log("North");
       if (isDestination(beginPointer - columns, finish)) {
         cellDetails[beginPointer - columns].parent = beginPointer;
         return tracePath(cellDetails, finish, conqueredList);
@@ -52,7 +49,7 @@ function A_star_pathfinding(grid, start, finish, numberOfNodes, rows, columns) {
         gNew = cellDetails[beginPointer].g + 1;
         hNew = calculateHValue(beginPointer - columns, finish, rows, columns);
         fNew = gNew + hNew;
-        console.log(hNew, "hNew");
+
         // If it isn’t on the open list, add it to
         // the open list. Make the current square
         // the parent of this square. Record the
@@ -65,7 +62,6 @@ function A_star_pathfinding(grid, start, finish, numberOfNodes, rows, columns) {
           cellDetails[beginPointer - columns].f === Number.MAX_SAFE_INTEGER ||
           cellDetails[beginPointer - columns].f > fNew
         ) {
-          console.log(beginPointer - columns);
           conqueredList.push(beginPointer - columns);
           openList[beginPointer - columns] = fNew;
           cellDetails[beginPointer - columns].f = fNew;
@@ -75,14 +71,9 @@ function A_star_pathfinding(grid, start, finish, numberOfNodes, rows, columns) {
         }
       }
     }
-    console.log(
-      isValid(beginPointer + columns, numberOfNodes),
-      beginPointer + columns,
-      numberOfNodes
-    );
+
     // South
     if (isValid(beginPointer + columns, numberOfNodes)) {
-      console.log("South");
       if (isDestination(beginPointer + columns, finish)) {
         cellDetails[beginPointer + columns].parent = beginPointer;
         return tracePath(cellDetails, finish, conqueredList);
@@ -95,7 +86,7 @@ function A_star_pathfinding(grid, start, finish, numberOfNodes, rows, columns) {
         gNew = cellDetails[beginPointer].g + 1;
         hNew = calculateHValue(beginPointer + columns, finish, rows, columns);
         fNew = gNew + hNew;
-        console.log(hNew, "hNew");
+
         // If it isn’t on the open list, add it to
         // the open list. Make the current square
         // the parent of this square. Record the
@@ -108,7 +99,6 @@ function A_star_pathfinding(grid, start, finish, numberOfNodes, rows, columns) {
           cellDetails[beginPointer + columns].f === Number.MAX_SAFE_INTEGER ||
           cellDetails[beginPointer + columns].f > fNew
         ) {
-          console.log(beginPointer + columns);
           conqueredList.push(beginPointer + columns);
           openList[beginPointer + columns] = fNew;
           cellDetails[beginPointer + columns].f = fNew;
@@ -124,7 +114,6 @@ function A_star_pathfinding(grid, start, finish, numberOfNodes, rows, columns) {
       isValid(beginPointer + 1, numberOfNodes) &&
       beginPointer % columns !== 0
     ) {
-      console.log("East");
       if (isDestination(beginPointer + 1, finish)) {
         cellDetails[beginPointer + 1].parent = beginPointer;
         return tracePath(cellDetails, finish, conqueredList);
@@ -136,7 +125,7 @@ function A_star_pathfinding(grid, start, finish, numberOfNodes, rows, columns) {
       ) {
         gNew = cellDetails[beginPointer].g + 1;
         hNew = calculateHValue(beginPointer + 1, finish, rows, columns);
-        console.log(hNew, "hNew");
+
         fNew = gNew + hNew;
 
         // If it isn’t on the open list, add it to
@@ -151,7 +140,6 @@ function A_star_pathfinding(grid, start, finish, numberOfNodes, rows, columns) {
           cellDetails[beginPointer + 1].f === Number.MAX_SAFE_INTEGER ||
           cellDetails[beginPointer + 1].f > fNew
         ) {
-          console.log(beginPointer + 1);
           conqueredList.push(beginPointer + 1);
           openList[beginPointer + 1] = fNew;
           cellDetails[beginPointer + 1].f = fNew;
@@ -167,7 +155,6 @@ function A_star_pathfinding(grid, start, finish, numberOfNodes, rows, columns) {
       isValid(beginPointer - 1, numberOfNodes) &&
       beginPointer % columns !== 1
     ) {
-      console.log("West");
       if (isDestination(beginPointer - 1, finish)) {
         cellDetails[beginPointer - 1].parent = beginPointer;
         return tracePath(cellDetails, finish, conqueredList);
@@ -180,7 +167,7 @@ function A_star_pathfinding(grid, start, finish, numberOfNodes, rows, columns) {
         gNew = cellDetails[beginPointer].g + 1;
         hNew = calculateHValue(beginPointer - 1, finish, rows, columns);
         fNew = gNew + hNew;
-        console.log(hNew, "hNew");
+
         // If it isn’t on the open list, add it to
         // the open list. Make the current square
         // the parent of this square. Record the
@@ -193,7 +180,6 @@ function A_star_pathfinding(grid, start, finish, numberOfNodes, rows, columns) {
           cellDetails[beginPointer - 1].f === Number.MAX_SAFE_INTEGER ||
           cellDetails[beginPointer - 1].f > fNew
         ) {
-          console.log(beginPointer - 1);
           conqueredList.push(beginPointer - 1);
           openList[beginPointer - 1] = fNew;
           cellDetails[beginPointer - 1].f = fNew;
@@ -203,12 +189,11 @@ function A_star_pathfinding(grid, start, finish, numberOfNodes, rows, columns) {
         }
       }
     }
-    console.log(openList);
 
     // console.log("delete");
   }
 
-  // console.log(rows);
+  return { path: [], conqueredNode: conqueredList };
 }
 // Calculate function to calculate Manhattan distance
 function calculateHValue(node, finish, rows, columns) {
@@ -217,7 +202,7 @@ function calculateHValue(node, finish, rows, columns) {
   let columnNumber = node - Math.floor(node / columns) * columns;
 
   let finishColumnNumber = finish - Math.floor(finish / columns) * columns;
-  console.log(finishRowNumber, "hvalue");
+
   return (
     Math.abs(rowNumber - finishRowNumber) +
     Math.abs(columnNumber - finishColumnNumber)
@@ -269,7 +254,7 @@ function tracePath(cellDetails, dest, conqueredList) {
     Path.push(pos);
     pos = cellDetails[pos].parent;
   }
-  console.log(Path, "as");
+
   return { path: Path, conqueredNode: conqueredList };
 }
 

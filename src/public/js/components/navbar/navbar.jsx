@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import dijkstra from "../algorithms/dijkstra";
 import Astar from "../algorithms/Astar";
+import Breadth_first_search from "../algorithms/Breadth-first-search";
+import search from "../algorithms/Depth-first-search";
 import start from "../../../image/start.png";
 import finish from "../../../image/finish.png";
 import block from "../../../image/block.png";
@@ -30,7 +32,7 @@ export default class navbar extends Component {
       columns,
       shortestPath
     } = this.props.state;
-    console.log(columns);
+
     if (this.state.selectValue === "Dijkstra") {
       const { path, conqueredNode } = dijkstra(grid, start, finish, 20 * 40);
 
@@ -51,8 +53,33 @@ export default class navbar extends Component {
 
       this.props.setVisualize(true);
     }
+    if (this.state.selectValue === "Breath-first search") {
+      const { path, conqueredNode } = Breadth_first_search(
+        grid,
+        start,
+        finish,
+        20 * 40,
+        rows,
+        columns
+      );
 
-    // console.log(visitedNode);
+      this.props.setPath(path, conqueredNode);
+
+      this.props.setVisualize(true);
+    }
+    if (this.state.selectValue === "Depth-first search") {
+      const { path, conqueredNode } = search(
+        grid,
+        start,
+        finish,
+        20 * 40,
+        rows,
+        columns
+      );
+      this.props.setPath(path, conqueredNode);
+
+      this.props.setVisualize(true);
+    }
   };
 
   render() {
@@ -72,6 +99,7 @@ export default class navbar extends Component {
                 <option value="Dijkstra">Dijkstra</option>
                 <option value="A*">A*</option>
                 <option value="Breath-first search">Breath-first search</option>
+                <option value="Depth-first search">Depth-first search</option>
               </select>
             </li>
             <li>

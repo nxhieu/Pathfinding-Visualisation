@@ -35,7 +35,7 @@ function Dijkstra(grid, start, finish, numberOfNodes) {
     k++;
   }
 
-  return { path: null, conqueredNode: conquered };
+  return { path: [], conqueredNode: conquered };
 }
 
 function conquerNode(
