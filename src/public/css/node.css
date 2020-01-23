@@ -33,7 +33,7 @@
 .node-blocked {
   outline: 0.01px solid #000;
   background-color: #4b4b4b;
-  animation: fadeInFromNone 0.1s ease-out;
+  animation: fadeInFromNone 0.025s ease-out;
 }
 
 .node-start {
@@ -47,29 +47,31 @@
 }
 
 @keyframes fadeInFromNone {
-  0% {
-    display: none;
-    background-color: #5e5959;
-    opacity: 0;
+  from {
+    content: "";
+
+    outline: none;
+    background-color: #f4f4f4;
+    transform: scale(0);
+    border: none;
+
+    border-radius: 100%;
   }
 
-  50% {
-    display: block;
+  to {
+    outline: none;
+
+    transform: scale(1);
     background-color: #454141;
-    opacity: 0;
-  }
-
-  100% {
-    display: block;
     opacity: 1;
+    border-radius: 0%;
   }
 }
 
 @keyframes vertexConquered {
   from {
     content: "";
-    /* top: 50%;
-    left: 50%; */
+
     outline: none;
     background-color: #4bfa54;
     transform: scale(0);
@@ -77,45 +79,6 @@
 
     border-radius: 100%;
   }
-
-  /* 10% {
-    display: none;
-
-    background-color: #5e5959;
-
-   
-    opacity: 0.1;
-    border-radius: 10%;
-  }
-
-  20% {
-    display: none;
-
-    background-color: #5e5959;
-
-   
-    opacity: 0.2;
-    border-radius: 20%;
-  }
-
-  30% {
-    display: none;
-
-    background-color: #5e5959;
-
-   
-    opacity: 0.2;
-    border-radius: 30%;
-  }
-  50% {
-    display: block;
-
-    background-color: #454141;
-
-   
-    opacity: 0.5;
-    border-radius: 50%;
-  } */
 
   to {
     outline: none;
@@ -125,3 +88,20 @@
     border-radius: 0%;
   }
 }
+
+/* 0% {
+  display: none;
+  background-color: #5e5959;
+  opacity: 0;
+}
+
+50% {
+  display: block;
+  background-color: #454141;
+  opacity: 0;
+}
+
+100% {
+  display: block;
+  opacity: 1;
+} */

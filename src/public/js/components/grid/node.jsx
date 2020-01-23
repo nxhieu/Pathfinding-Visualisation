@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+
 import "../../../css/node.css";
 
 const node = React.forwardRef(
@@ -11,18 +12,12 @@ const node = React.forwardRef(
       setBlock(node.isBlocked);
       setFinish(node.finish);
     }, [node.start, node.finish, node.isBlocked]);
-    //
-    // let state = { isStart: false };
-    // if (node.start) {
-    //   setState(prevState => ({ isStart: true }));
-    // }
-    // isStart ? "start" : null
+
     return (
       <div
         ref={ref}
         className={`node-${startOrFinish(isStart, isFinish, isBlocked)}`}
         onMouseDown={() => {
-          console.log("here");
           handleMouseDown(index);
         }}
         onMouseUp={() => {

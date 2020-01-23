@@ -14,100 +14,137 @@ export default class navbar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectValue: "Algorithms"
+      selectValue: "Algorithms",
+      isDropDown: false
     };
   }
 
-  handleDropdownButton = event => {
-    console.log(event);
-    this.setState({ selectValue: event.target.value });
+  onDropDown = () => {
+    this.setState({ isDropDown: !this.state.isDropDown });
+  };
+
+  handleDropdownButton = value => {
+    this.setState({ selectValue: value });
+  };
+
+  // dropdown list
+
+  openList = () => {
+    return (
+      <ul className="option_algorithms">
+        <li onClick={() => this.handleDropdownButton("Dijkstra")}>Dijkstra</li>
+        <li onClick={this.handleDropdownButton.bind(this, "A*")}>A*</li>
+        <li
+          onClick={this.handleDropdownButton.bind(this, "Breath-first search")}
+        >
+          Breath-first search
+        </li>
+        <li
+          onClick={this.handleDropdownButton.bind(this, "Depth-first search")}
+        >
+          Depth-first search
+        </li>
+      </ul>
+    );
   };
 
   onVisualize = () => {
-    const {
-      grid,
-      start,
-      finish,
-      rows,
-      columns,
-      shortestPath
-    } = this.props.state;
+    if (!this.props.state.isVisualized) {
+      this.props.resetVisualize();
 
-    if (this.state.selectValue === "Dijkstra") {
-      const { path, conqueredNode } = dijkstra(grid, start, finish, 20 * 40);
-
-      this.props.setPath(path, conqueredNode);
-
-      this.props.setVisualize(true);
-    }
-    if (this.state.selectValue === "A*") {
-      const { path, conqueredNode } = Astar(
+      const {
         grid,
         start,
         finish,
-        20 * 40,
         rows,
-        columns
-      );
-      this.props.setPath(path, conqueredNode);
+        columns,
+        shortestPath
+      } = this.props.state;
 
-      this.props.setVisualize(true);
-    }
-    if (this.state.selectValue === "Breath-first search") {
-      const { path, conqueredNode } = Breadth_first_search(
-        grid,
-        start,
-        finish,
-        20 * 40,
-        rows,
-        columns
-      );
+      if (this.state.selectValue === "Dijkstra") {
+        const { path, conqueredNode } = dijkstra(grid, start, finish, 20 * 40);
 
-      this.props.setPath(path, conqueredNode);
+        this.props.setPath(path, conqueredNode);
 
-      this.props.setVisualize(true);
-    }
-    if (this.state.selectValue === "Depth-first search") {
-      const { path, conqueredNode } = search(
-        grid,
-        start,
-        finish,
-        20 * 40,
-        rows,
-        columns
-      );
-      this.props.setPath(path, conqueredNode);
+        this.props.setVisualize(true);
+      }
+      if (this.state.selectValue === "A*") {
+        const { path, conqueredNode } = Astar(
+          grid,
+          start,
+          finish,
+          20 * 40,
+          rows,
+          columns
+        );
+        this.props.setPath(path, conqueredNode);
 
-      this.props.setVisualize(true);
+        this.props.setVisualize(true);
+      }
+      if (this.state.selectValue === "Breath-first search") {
+        const { path, conqueredNode } = Breadth_first_search(
+          grid,
+          start,
+          finish,
+          20 * 40,
+          rows,
+          columns
+        );
+
+        this.props.setPath(path, conqueredNode);
+
+        this.props.setVisualize(true);
+      }
+      if (this.state.selectValue === "Depth-first search") {
+        const { path, conqueredNode } = search(
+          grid,
+          start,
+          finish,
+          20 * 40,
+          rows,
+          columns
+        );
+        this.props.setPath(path, conqueredNode);
+
+        this.props.setVisualize(true);
+      }
     }
   };
 
   render() {
+    let background = this.props.state.isVisualized ? "#fb8c00" : null;
+    let background_color = { color: background };
     return (
       <div className="main-nav">
         <div className="upper-nav">
-          <p>PathFinder</p>
+          <p className="page-title">PathFinder</p>
           <ul className="upper-nav-list">
             <li>
-              <select
-                value={this.state.selectValue}
-                onChange={this.handleDropdownButton}
-              >
-                <option hidden value="Algorithms">
-                  Algorithms
-                </option>
-                <option value="Dijkstra">Dijkstra</option>
-                <option value="A*">A*</option>
-                <option value="Breath-first search">Breath-first search</option>
-                <option value="Depth-first search">Depth-first search</option>
-              </select>
+              <div onClick={this.onDropDown} className="dropdown algorithm">
+                <div className="select">
+                  <p>
+                    {this.state.selectValue
+                      ? this.state.selectValue
+                      : "Algorithms"}
+                  </p>
+                  <i className="material-icons md-light md-inactive">
+                    {" "}
+                    keyboard_arrow_down
+                  </i>
+                </div>
+                {this.state.isDropDown ? this.openList() : null}
+              </div>
             </li>
             <li>
-              <button onClick={this.onVisualize}>Visualize</button>
+              <button onClick={this.onVisualize} style={background_color}>
+                {this.props.state.isVisualized ? "Visualizing !" : "Visualize"}
+              </button>
             </li>
 
             <li>
-              <a href="#">Clear walls</a>
+              <a onClick={this.props.clearWalls} href="#">
+                Clear walls
+              </a>
             </li>
           </ul>
         </div>

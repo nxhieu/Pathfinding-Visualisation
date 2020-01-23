@@ -31,7 +31,6 @@ export default class grid extends Component {
   componentDidMount() {
     const grid = init_Grid(rows, columns, initialStart, initialFinish);
     if (!this.state.start) {
-      console.log(" not   here");
       this.setState({ start: initialStart, finish: initialFinish });
     } else {
       this.setState({ start: this.state.start, finish: this.state.finish });
@@ -45,6 +44,7 @@ export default class grid extends Component {
       this.state.isVisualized !== prevProps.isVisualized &&
       this.state.isVisualized === true
     ) {
+      let self = this;
       let myRef = this.myRef;
       let k = 0;
       for (let i of this.state.conqueredNode) {
@@ -80,12 +80,40 @@ export default class grid extends Component {
               i
             );
           }
+          self.setState({ isVisualized: false });
         },
         length * 50,
         shortestPath
       );
-    } else {
-      return false;
+    }
+  }
+
+  resetVisualize() {
+    if (this.state.isVisualized === false) {
+      let myRef = this.myRef;
+      for (let i of this.state.conqueredNode) {
+        myRef[i].classList.replace("node-conquered", "node-normal");
+        myRef[i].classList.replace("node-path", "node-normal");
+      }
+    }
+  }
+
+  clearWalls() {
+    if (this.state.isVisualized === false) {
+      let myRef = this.myRef;
+      for (let i of this.state.conqueredNode) {
+        myRef[i].classList.replace("node-conquered", "node-normal");
+        myRef[i].classList.replace("node-path", "node-normal");
+      }
+      for (let i = 1; i < this.state.grid.length; i++) {
+        myRef[i].classList.replace("node-blocked", "node-normal");
+        // this.setState({
+        //   grid: update(this.state.grid, {
+        //     [i]: { isBlocked: { $set: false } }
+        //   })
+        // });
+        deleteBlocktoGrid(this.state.grid, i);
+      }
     }
   }
 
@@ -98,75 +126,76 @@ export default class grid extends Component {
   }
 
   setVisualize(isVisualized) {
-    if (this.state.isVisualized === false) {
-      this.setState({ isVisualized });
-    }
+    this.setState({ isVisualized });
   }
   handleMouseDown = index => {
-    console.log("?");
-    console.log(this.state.start === index);
-    if (!this.state.isMouseOnStart && index === this.state.start) {
-      this.setState({ isMouseOnStart: true });
-    } else if (
-      !this.state.isMouseClicked &&
-      index !== this.state.start &&
-      index !== this.state.finish &&
-      !this.state.isMouseOnStart &&
-      !this.state.isMouseOnFinish
-    ) {
-      this.setState({ isMouseClicked: true });
-    } else if (
-      !this.state.isMouseClicked &&
-      index === this.state.finish &&
-      !this.state.isMouseOnFinish &&
-      !this.state.isMouseOnStart
-    ) {
-      this.setState({ isMouseOnFinish: true });
+    if (!this.state.isVisualized) {
+      if (!this.state.isMouseOnStart && index === this.state.start) {
+        this.setState({ isMouseOnStart: true });
+      } else if (
+        !this.state.isMouseClicked &&
+        index !== this.state.start &&
+        index !== this.state.finish &&
+        !this.state.isMouseOnStart &&
+        !this.state.isMouseOnFinish
+      ) {
+        this.setState({ isMouseClicked: true });
+      } else if (
+        !this.state.isMouseClicked &&
+        index === this.state.finish &&
+        !this.state.isMouseOnFinish &&
+        !this.state.isMouseOnStart
+      ) {
+        this.setState({ isMouseOnFinish: true });
+      }
     }
   };
 
   handleMouseUp = index => {
-    if (this.state.isMouseOnStart) {
-      this.setState({ isMouseOnStart: false });
-      this.setState({
-        grid: changeStartorFinish(this.state.grid, index, this.state.start),
-        start: index
-      });
-    } else if (this.state.isMouseClicked) {
-      this.setState({ isMouseClicked: false });
-      this.setState({
-        grid: update(this.state.grid, {
-          [index]: { isBlocked: { $set: true } }
-        })
-      });
-    } else if (this.state.isMouseOnFinish) {
-      this.setState({ isMouseOnFinish: false });
-      this.setState({
-        grid: changeFinish(this.state.grid, index, this.state.finish),
-        finish: index
-      });
+    if (!this.state.isVisualized) {
+      if (this.state.isMouseOnStart) {
+        this.setState({ isMouseOnStart: false });
+        this.setState({
+          grid: changeStartorFinish(this.state.grid, index, this.state.start),
+          start: index
+        });
+      } else if (this.state.isMouseClicked) {
+        this.setState({ isMouseClicked: false });
+        this.setState({
+          grid: update(this.state.grid, {
+            [index]: { isBlocked: { $set: true } }
+          })
+        });
+      } else if (this.state.isMouseOnFinish) {
+        this.setState({ isMouseOnFinish: false });
+        this.setState({
+          grid: changeFinish(this.state.grid, index, this.state.finish),
+          finish: index
+        });
+      }
     }
   };
 
   handleMouseEnter = index => {
-    if (this.state.isMouseOnStart) {
-      this.setState({
-        grid: changeStartorFinish(this.state.grid, index, this.state.start),
-        start: index
-      });
-    } else if (this.state.isMouseClicked && !this.state.isMouseOnFinish) {
-      console.log("tf");
-      this.setState({
-        grid: update(this.state.grid, {
-          [index]: { isBlocked: { $set: true } }
-        })
-      });
-    } else if (this.state.isMouseOnFinish) {
-      this.setState({ isMouseOnFinish: false });
-      this.setState({
-        grid: changeFinish(this.state.grid, index, this.state.finish),
-        finish: index
-      });
+    if (!this.state.isVisualized) {
+      if (this.state.isMouseOnStart) {
+        this.setState({
+          grid: changeStartorFinish(this.state.grid, index, this.state.start),
+          start: index
+        });
+      } else if (this.state.isMouseOnFinish) {
+        // this.setState({ isMouseOnFinish: false });
+        this.setState({
+          grid: changeFinish(this.state.grid, index, this.state.finish),
+          finish: index
+        });
+      } else if (this.state.isMouseClicked && !this.state.isMouseOnFinish) {
+        this.setState({
+          grid: update(this.state.grid, {
+            [index]: { isBlocked: { $set: true } }
+          })
+        });
+      }
     }
   };
 
@@ -186,6 +215,8 @@ export default class grid extends Component {
           state={this.state}
           setVisualize={this.setVisualize.bind(this)}
           setPath={this.setPath.bind(this)}
+          resetVisualize={this.resetVisualize.bind(this)}
+          clearWalls={this.clearWalls.bind(this)}
         />
         <div className="grid">
           {this.state.grid.map((adjencyVertex, index) => (
@@ -254,7 +285,6 @@ function maximumNode(rows, columns) {
 }
 
 function changeStartorFinish(grid, index, oldindex) {
-  console.log("change grid");
   let newGrid = Object.assign([], grid);
   newGrid[oldindex].start = false;
   newGrid[index].start = true;
@@ -262,22 +292,14 @@ function changeStartorFinish(grid, index, oldindex) {
 }
 
 function changeFinish(grid, index, oldindex) {
-  console.log("change grid");
   let newGrid = Object.assign([], grid);
   newGrid[oldindex].finish = false;
   newGrid[index].finish = true;
   return newGrid;
 }
 
-function addBlocktoGrid(grid, index) {
-  console.log("add block");
-
-  // let newGrid = Object.assign([], grid);
-
-  let newGrid = update(grid, { [index]: { isBlocked: { $set: true } } });
-  // if (!newGrid[index].start) {
-  //   newGrid[index].isBlocked = true;
-  // }
-
+function deleteBlocktoGrid(grid, index) {
+  let newGrid = Object.assign([], grid);
+  newGrid[index].isBlocked = false;
   return newGrid;
 }

@@ -42,12 +42,11 @@ function tracePath(closedList, start, finish) {
   let path = [];
   let i = finish;
   while (i !== start) {
-    console.log("!");
-
     path.push(closedList[i]);
     i = closedList[i];
   }
-  return path;
+  let reversedPath = path.reverse();
+  return reversedPath;
 }
 
 export default Breadth_first_search;

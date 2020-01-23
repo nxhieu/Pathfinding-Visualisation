@@ -25,7 +25,6 @@ function A_star_pathfinding(grid, start, finish, numberOfNodes, rows, columns) {
   while (!isEmpty(openList)) {
     //pop the start node off of the openList
 
-    // let beginPointer = openList[Object.keys(openList)[0]];
     let beginPointer = parseInt(findMinimum(openList));
     delete openList[beginPointer];
 
@@ -254,8 +253,8 @@ function tracePath(cellDetails, dest, conqueredList) {
     Path.push(pos);
     pos = cellDetails[pos].parent;
   }
-
-  return { path: Path, conqueredNode: conqueredList };
+  let reversedPath = Path.reverse();
+  return { path: reversedPath, conqueredNode: conqueredList };
 }
 
 export default A_star_pathfinding;

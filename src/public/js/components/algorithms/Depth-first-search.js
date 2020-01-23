@@ -10,7 +10,8 @@ function search(grid, start, finish, numberOfNode, rows, columns) {
   depth_First_Search(start, grid, start, finish, closedList, conqueredList);
 
   if (foundDestination === true) {
-    let path = tracePath(closedList, start, finish);
+    let path = tracePath(closedList, start, finish).reverse();
+
     return { path: path, conqueredNode: path };
   } else {
     return { path: [], conqueredNode: conqueredList };

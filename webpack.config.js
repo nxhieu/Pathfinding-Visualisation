@@ -7,12 +7,18 @@ const VENDOR_LIBS = ["react", "react-dom"];
 
 module.exports = {
   entry: {
-    bundle: path.resolve(__dirname, "src", "public", "js", "main.js"),
+    bundle: path.resolve(__dirname, "src", "public", "js", "main.jsx"),
     vendor: VENDOR_LIBS
   },
+
+  devtool: "inline-source-map",
   output: {
-    path: path.resolve(__dirname, "dist"),
-    filename: "[name].[chunkhash].js"
+    path: path.resolve(__dirname, "./dist"),
+    filename: "[name].[chunkhash].js",
+    publicPath: "./"
+  },
+  devServer: {
+    contentBase: "./dist"
   },
   mode: "development",
   module: {
@@ -30,7 +36,7 @@ module.exports = {
             options: {
               // you can specify a publicPath here
               // by default it uses publicPath in webpackOptions.output
-              publicPath: "../",
+
               hmr: process.env.NODE_ENV === "development"
             }
           },
