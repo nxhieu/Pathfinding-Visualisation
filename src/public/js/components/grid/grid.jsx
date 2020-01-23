@@ -6,7 +6,7 @@ import "../../../css/grid.css";
 
 const rows = 20;
 const columns = 40;
-const initialStart = Math.floor((rows * columns) / 2 - 10);
+const initialStart = Math.floor((rows * columns) / 2 + 10);
 const initialFinish = Math.floor(initialStart + 20);
 
 export default class grid extends Component {
@@ -147,6 +147,11 @@ export default class grid extends Component {
         !this.state.isMouseOnStart
       ) {
         this.setState({ isMouseOnFinish: true });
+        this.setState({
+          grid: update(this.state.grid, {
+            [index]: { isBlocked: { $set: true } }
+          })
+        });
       }
     }
   };
