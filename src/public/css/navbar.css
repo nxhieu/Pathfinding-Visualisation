@@ -2,9 +2,9 @@
   margin: 0;
 }
 
-.main-nav {
+/* .main-nav {
   height: 15vh;
-}
+} */
 /* UPPER-NAV */
 
 .main-nav .upper-nav {
@@ -51,7 +51,6 @@
 
 .main-nav .upper-nav > p {
   color: #ffffff;
-
   letter-spacing: 0.1rem;
   font-size: 1.8rem;
   font-weight: bold;
@@ -94,7 +93,7 @@
 /* LOWER-NAV */
 .main-nav .lower-nav {
   background-color: #f4f4f4;
-  height: 10vh;
+  height: 4vh;
   padding: 1.2rem 1rem 1rem 1rem;
 }
 
@@ -128,6 +127,12 @@
 .main-nav .lower-nav ul li img {
   width: 2rem;
   height: 2rem;
+}
+
+.lower-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 /* Lower-nav list mobile */
 
